@@ -8,12 +8,13 @@ terraform {
 }
 
 provider "google" {
+  credentials = file(var.credentials)
   project = "terraform-515511"
   region  = "us-central1"
 }
 
 resource "google_storage_bucket" "demo-storage-bucket" {
-  name          = "terraform-515511-storage-bucket"
+  name          = var.google_cloud_storage_bucket_name
   location      = "US"
   force_destroy = true
 
@@ -28,5 +29,6 @@ resource "google_storage_bucket" "demo-storage-bucket" {
 }
 
 resource "google_bigquery_dataset" "demo_dataset" {
-  dataset_id = "demo_dataset"
+  dataset_id = var.bigquery_dataset_name
+  location   = "US"
 }
